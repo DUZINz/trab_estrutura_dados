@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Iinclude -Wall -Wextra
-SRC = src/main.c src/user.c src/avl_tree.c src/user_management.c
+SRC = src/main.c src/product.c src/rb_tree.c src/inventory_management.c
 OBJ = $(SRC:.c=.o)
-TARGET = user_management_system
+TARGET = inventory_management_system
 
 all: $(TARGET)
 
