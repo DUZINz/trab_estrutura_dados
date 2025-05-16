@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "avl_tree.h"
-
-typedef struct User {
-    char username[50];
-    struct User *left;
-    struct User *right;
-    int height;
-} User;
+#include "exercicio1/include/avl_tree.h"
 
 int max(int a, int b) {
     return (a > b) ? a : b;
@@ -18,15 +11,6 @@ int height(User *N) {
     if (N == NULL)
         return 0;
     return N->height;
-}
-
-User* createUser(const char* username) {
-    User* newUser = (User*)malloc(sizeof(User));
-    strcpy(newUser->username, username);
-    newUser->left = NULL;
-    newUser->right = NULL;
-    newUser->height = 1; // New node is initially added at leaf
-    return newUser;
 }
 
 User *rightRotate(User *y) {
@@ -67,19 +51,19 @@ int getBalance(User *N) {
     return height(N->left) - height(N->right);
 }
 
-User* insert(User* node, const char* username) {
+User* insert(User* node, const char* username, const char* email) {
     if (node == NULL)
-        return createUser(username);
+        return createUser(username, email);
 
     if (strcmp(username, node->username) < 0)
-        node->left = insert(node->left, username);
+        node->left = insert(node->left, username, email);
     else if (strcmp(username, node->username) > 0)
-        node->right = insert(node->right, username);
+        node->right = insert(node->right, username, email);
     else // Duplicate usernames are not allowed
         return node;
 
     // Update height of this ancestor node
-    node->height = 1 + max(height(node->left), height(node->right)));
+    node->height = 1 + max(height(node->left), height(node->right));
 
     // Get the balance factor
     int balance = getBalance(node);
@@ -113,7 +97,7 @@ User* insert(User* node, const char* username) {
 User* minValueNode(User* node) {
     User* current = node;
 
-    while (current->left != NULL)
+    while (current && current->left != NULL)
         current = current->left;
 
     return current;
@@ -145,6 +129,7 @@ User* deleteNode(User* root, const char* username) {
 
             // Copy the inorder successor's data to this node
             strcpy(root->username, temp->username);
+            strcpy(root->email, temp->email);
 
             // Delete the inorder successor
             root->right = deleteNode(root->right, temp->username);
@@ -156,7 +141,7 @@ User* deleteNode(User* root, const char* username) {
         return root;
 
     // Update height of the current node
-    root->height = 1 + max(height(root->left), height(root->right)));
+    root->height = 1 + max(height(root->left), height(root->right));
 
     // Get the balance factor of this node to check whether this node became unbalanced
     int balance = getBalance(root);
@@ -186,26 +171,10 @@ User* deleteNode(User* root, const char* username) {
     return root;
 }
 
-void preOrder(User *root) {
-    if (root != NULL) {
-        printf("%s\n", root->username);
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-}
-
 void inOrder(User *root) {
     if (root != NULL) {
         inOrder(root->left);
-        printf("%s\n", root->username);
+        printf("Username: %s, Email: %s\n", root->username, root->email);
         inOrder(root->right);
-    }
-}
-
-void postOrder(User *root) {
-    if (root != NULL) {
-        postOrder(root->left);
-        postOrder(root->right);
-        printf("%s\n", root->username);
     }
 }

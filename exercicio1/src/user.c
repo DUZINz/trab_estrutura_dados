@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "user.h"
+#include "exercicio1/include/user.h"
 
 // Function to create a new user
 User* create_user(const char* username, const char* email) {
@@ -16,11 +16,12 @@ User* create_user(const char* username, const char* email) {
     new_user->email[sizeof(new_user->email) - 1] = '\0'; // Ensure null termination
     new_user->left = NULL;
     new_user->right = NULL;
+    new_user->height = 1; // New node is initially added at leaf
     return new_user;
 }
 
 // Function to delete a user
-void delete_user(User* user) {
+void delete_user_struct(User* user) {
     if (user != NULL) {
         free(user);
     }

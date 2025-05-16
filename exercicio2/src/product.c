@@ -1,9 +1,9 @@
-// filepath: exercicio_2/src/product.c
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "product.h"
+#include "exercicio2/include/product.h"
 
 #define MAX_PRODUCTS 100
 

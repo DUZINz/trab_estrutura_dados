@@ -5,7 +5,7 @@ This project implements a User Management System using an AVL Tree data structur
 
 ## Project Structure
 ```
-c-user-management-avl
+avl-user-management-system
 ├── src
 │   ├── main.c               # Entry point of the application
 │   ├── user.c               # User-related functions
